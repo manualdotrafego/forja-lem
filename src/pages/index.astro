@@ -1,0 +1,527 @@
+---
+import { Image } from 'astro:assets';
+import ForjaLayout from '~/layouts/ForjaLayout.astro';
+
+import heroFreire from '~/assets/images/forja/gf-hero.jpg';
+import palestraFreire from '~/assets/images/forja/gf-palestra.jpg';
+import logoForja from '~/assets/images/forja/forja-logo.jpg';
+
+const INSCRICAO = 'https://www.sympla.com.br/preview/628ed4b361eb12d9ba13015b4c00394b';
+const WHATSAPP =
+  'https://wa.me/5583991979037?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Aula%20Magna%20FORJA%20LEM.';
+
+const publico = [
+  {
+    titulo: 'Lidera pessoas e quer liderar melhor',
+    texto: 'Empresários, gestores e profissionais que percebem que técnica sozinha não sustenta uma liderança.',
+  },
+  {
+    titulo: 'Educa filhos em um mundo confuso',
+    texto: 'Pais e mães que querem formar caráter em casa, e não apenas administrar rotina.',
+  },
+  {
+    titulo: 'Carrega responsabilidade pública',
+    texto: 'Quem atua na vida política, associativa ou comunitária e precisa decidir com critério.',
+  },
+  {
+    titulo: 'Busca reconciliar fé e razão',
+    texto: 'Quem cansou de escolher entre acreditar e pensar, e quer as duas coisas com honestidade.',
+  },
+  {
+    titulo: 'Quer voltar aos clássicos',
+    texto: 'Quem deseja entrar na tradição filosófica sem se perder em jargão acadêmico.',
+  },
+  {
+    titulo: 'Sente que falta profundidade',
+    texto: 'Quem já tem resultado, mas percebe que a vida interior ficou para trás.',
+  },
+];
+
+const temas = [
+  { n: '01', titulo: 'Liderança e caráter', texto: 'Por que autoridade real nasce de virtude, e não de cargo.' },
+  { n: '02', titulo: 'Família e educação dos filhos', texto: 'A casa como primeira escola de formação humana.' },
+  { n: '03', titulo: 'Ética e vida pública', texto: 'O critério moral quando a decisão afeta muita gente.' },
+  { n: '04', titulo: 'Fé e razão', texto: 'A superação da falsa divisão entre acreditar e pensar.' },
+  { n: '05', titulo: 'Cultura clássica', texto: 'A sabedoria perene aplicada às perguntas de hoje.' },
+  { n: '06', titulo: 'Vida interior', texto: 'O trabalho silencioso que sustenta tudo o que aparece.' },
+];
+
+const credenciais = ['ONU', 'Cambridge', 'Oxford', 'Harvard', 'Vale do Silício', 'ITA', 'Insper'];
+
+const faq = [
+  {
+    q: 'Preciso ter estudado filosofia antes?',
+    a: 'Não. A aula é construída para quem nunca leu um clássico e também para quem já estuda há anos. O ponto de partida é a vida prática, não o vocabulário técnico.',
+  },
+  {
+    q: 'Onde exatamente acontece?',
+    a: 'No Hotel Saint Louis, em Luís Eduardo Magalhães, na Bahia. O endereço completo e as orientações de chegada são enviados por e-mail após a confirmação da inscrição.',
+  },
+  {
+    q: 'Qual a duração?',
+    a: 'São 90 minutos, das 15h às 16h30 do dia 12 de setembro de 2026. Recomendamos chegar com 20 minutos de antecedência para o credenciamento.',
+  },
+  {
+    q: 'É presencial ou tem transmissão?',
+    a: 'A Aula Magna é exclusivamente presencial. Não há transmissão ao vivo nem gravação disponibilizada depois.',
+  },
+  {
+    q: 'Como garanto minha vaga?',
+    a: 'A inscrição é feita pelo Sympla, no botão desta página. As vagas são limitadas pela capacidade do auditório e encerram assim que forem preenchidas.',
+  },
+  {
+    q: 'Ainda tenho dúvidas. Como falo com alguém?',
+    a: 'Chame nossa equipe no WhatsApp pelo botão fixo desta página. Respondemos em horário comercial.',
+  },
+];
+---
+
+<ForjaLayout
+  title="Aula Magna FORJA LEM com Guilherme Freire | 12 de setembro de 2026"
+  description="Aula Magna presencial com Guilherme Freire em Luís Eduardo Magalhães (BA). Cultura clássica, fé e razão a serviço de uma liderança de caráter. 12 de setembro de 2026, vagas limitadas."
+  image={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/og-forja-lem.jpg`}
+>
+  <!-- ==================== HEADER ==================== -->
+  <header
+    class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-[#0a0908]/80 backdrop-blur-md supports-[backdrop-filter]:bg-[#0a0908]/60"
+  >
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
+      <a href="#topo" class="flex items-center gap-3" aria-label="FORJA LEM, início da página">
+        <Image
+          src={logoForja}
+          alt="FORJA LEM, Fórum de Formação, Filosofia e Liderança"
+          widths={[240, 480]}
+          sizes="150px"
+          class="h-9 w-auto rounded-[3px] md:h-10"
+          loading="eager"
+        />
+      </a>
+      <div class="flex items-center gap-5">
+        <span class="rotulo hidden text-[10px] text-[#ebc173]/70 lg:block">12 · 09 · 2026 &nbsp;|&nbsp; LEM · BA</span>
+        <a
+          href={INSCRICAO}
+          target="_blank"
+          rel="noopener"
+          class="rotulo rounded-full bg-[#ebc173] px-5 py-2.5 text-[10px] text-[#0a0908] transition hover:bg-[#f4e1c8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ebc173] md:px-6 md:text-[11px]"
+        >
+          Garantir vaga
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="topo" class="relative isolate overflow-hidden">
+    <!-- Retrato + degradês que fundem a foto no preto -->
+    <div class="absolute inset-0 -z-10">
+      <Image
+        src={heroFreire}
+        alt="Guilherme Freire em uma biblioteca"
+        widths={[800, 1400, 2205]}
+        sizes="(max-width: 1024px) 140vw, 100vw"
+        class="h-full w-full object-cover object-[68%_center] opacity-95 lg:object-[72%_center]"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <!-- Escurece a esquerda para o texto respirar e libera o rosto à direita -->
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-[#0a0908] via-[#0a0908]/92 to-[#0a0908]/62 lg:from-28% lg:via-[#0a0908]/85 lg:via-50% lg:to-transparent lg:to-72%"
+      >
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent via-40% to-[#0a0908]/45"></div>
+    </div>
+
+    <div class="mx-auto max-w-6xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-32 lg:pt-48">
+      <div class="max-w-2xl">
+        <p class="rotulo flex items-center gap-3 text-[11px] text-[#ebc173]">
+          <span class="inline-block h-px w-8 bg-[#ebc173]"></span>
+          Aula Magna presencial
+        </p>
+
+        <h1
+          class="font-display mt-6 max-w-[13ch] text-[2.6rem] leading-[1.05] text-balance text-[#fff1df] sm:max-w-none md:text-6xl lg:text-[4.25rem]"
+        >
+          <span class="block sm:inline lg:block">A formação que forjou</span>{' '}
+          <span class="block sm:inline lg:block">os grandes líderes</span>{' '}
+          <span class="block text-[#ebc173] italic sm:inline lg:block">da história</span>
+        </h1>
+
+        <p class="mt-7 max-w-xl text-base leading-relaxed text-[#fff1df]/70 md:text-lg">
+          Nenhuma liderança que durou nasceu de técnica ou de fórmula. Nasceu de caráter forjado com tempo, cultura,
+          filosofia e vida interior. É disso que Guilherme Freire vem falar em Luís Eduardo Magalhães.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={INSCRICAO}
+            target="_blank"
+            rel="noopener"
+            class="rotulo group inline-flex items-center justify-center gap-2 rounded-full bg-[#ebc173] px-8 py-4 text-xs text-[#0a0908] shadow-[0_0_40px_-8px_rgba(235,193,115,0.5)] transition hover:bg-[#f4e1c8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ebc173]"
+          >
+            Garantir minha vaga
+            <span aria-hidden="true" class="transition group-hover:translate-x-1">&rarr;</span>
+          </a>
+          <a
+            href={WHATSAPP}
+            target="_blank"
+            rel="noopener"
+            class="rotulo inline-flex items-center justify-center rounded-full border border-[#fff1df]/25 px-8 py-4 text-xs text-[#fff1df] transition hover:border-[#ebc173] hover:text-[#ebc173] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ebc173]"
+          >
+            Tirar uma dúvida
+          </a>
+        </div>
+
+        <p class="rotulo mt-8 text-[10px] text-[#fff1df]/40">
+          12 de setembro de 2026 &nbsp;·&nbsp; 15h às 16h30 &nbsp;·&nbsp; Vagas limitadas
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAIXA DE DADOS ==================== -->
+  <section aria-label="Informações do evento" class="border-y border-white/8 bg-[#131110]">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 px-5 sm:grid-cols-2 md:px-8 lg:grid-cols-4">
+      {
+        [
+          { r: 'Data', t: '12 de setembro', s: 'Sábado, 2026' },
+          { r: 'Horário', t: '15h às 16h30', s: '90 minutos' },
+          { r: 'Local', t: 'Hotel Saint Louis', s: 'Luís Eduardo Magalhães, BA' },
+          { r: 'Formato', t: 'Presencial', s: 'Vagas estritamente limitadas' },
+        ].map((item, i) => (
+          <div
+            class:list={[
+              'border-white/8 py-7 md:py-8',
+              i > 0 && 'border-t sm:border-t-0 sm:border-l sm:pl-6 lg:pl-8',
+              i === 2 && 'sm:border-l-0 sm:border-t sm:pl-0 lg:border-l lg:border-t-0 lg:pl-8',
+            ]}
+          >
+            <p class="rotulo text-[10px] text-[#ebc173]/60">{item.r}</p>
+            <p class="font-display mt-2 text-xl text-[#fff1df] md:text-2xl">{item.t}</p>
+            <p class="mt-1 text-sm text-[#fff1df]/45">{item.s}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ==================== CITAÇÃO ==================== -->
+  <section class="relative overflow-hidden py-24 md:py-32">
+    <div
+      class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(235,193,115,0.13),transparent_70%)]"
+    >
+    </div>
+    <div class="revelar mx-auto max-w-3xl px-5 text-center md:px-8">
+      <p class="font-display text-2xl leading-snug text-[#fff1df] md:text-4xl md:leading-[1.3]">
+        <span class="text-[#ebc173]">“</span>A liderança é, antes de tudo, uma disposição para o sacrifício e para o
+        desenvolvimento da vida interior.<span class="text-[#ebc173]">”</span>
+      </p>
+      <p class="rotulo mt-8 text-[10px] text-[#ebc173]">Guilherme Freire</p>
+    </div>
+  </section>
+
+  <!-- ==================== PARA QUEM É ==================== -->
+  <section class="bg-[#131110] py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-5 md:px-8">
+      <div class="revelar max-w-2xl">
+        <p class="rotulo text-[11px] text-[#ebc173]">Para quem é</p>
+        <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-5xl">
+          Esta aula foi pensada para quem carrega<span class="text-[#ebc173] italic"> alguma responsabilidade</span> nas
+          costas.
+        </h2>
+        <p class="mt-6 text-base leading-relaxed text-[#fff1df]/55 md:text-lg">
+          Liderar uma empresa, uma casa ou uma comunidade exige mais do que método. Exige um tipo de formação que o
+          mercado parou de oferecer há algumas décadas.
+        </p>
+      </div>
+
+      <ul class="revelar mt-14 grid gap-px border-t border-white/8 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          publico.map((item) => (
+            <li class="group border-b border-white/8 py-8 sm:pr-8">
+              <div class="flex items-start gap-4">
+                <span
+                  aria-hidden="true"
+                  class="mt-2 inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-[#d9662b] transition group-hover:bg-[#ebc173]"
+                />
+                <div>
+                  <h3 class="font-display text-xl text-[#fff1df]">{item.titulo}</h3>
+                  <p class="mt-2 text-sm leading-relaxed text-[#fff1df]/50">{item.texto}</p>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== GUILHERME FREIRE ==================== -->
+  <section class="py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-5 md:px-8">
+      <div class="grid items-start gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
+        <div class="revelar">
+          <div class="relative">
+            <div
+              aria-hidden="true"
+              class="absolute -inset-3 -z-10 rounded-sm bg-[radial-gradient(ellipse_at_center,rgba(235,193,115,0.18),transparent_70%)]"
+            >
+            </div>
+            <Image
+              src={palestraFreire}
+              alt="Guilherme Freire palestrando em um auditório"
+              widths={[600, 900, 1400]}
+              sizes="(max-width: 1024px) 92vw, 460px"
+              class="w-full rounded-sm border border-white/10 object-cover"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="mt-8 border-l-2 border-[#d9662b] pl-5">
+            <p class="rotulo text-[10px] text-[#ebc173]/60">Já palestrou em</p>
+            <p class="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-[#fff1df]/70">
+              {
+                credenciais.map((c, i) => (
+                  <span>
+                    {c}
+                    {i < credenciais.length - 1 && <span class="ml-3 text-[#fff1df]/20">/</span>}
+                  </span>
+                ))
+              }
+            </p>
+          </div>
+        </div>
+
+        <div class="revelar">
+          <p class="rotulo text-[11px] text-[#ebc173]">Quem conduz</p>
+          <h2 class="font-display mt-5 text-4xl leading-none text-[#fff1df] md:text-6xl">Guilherme Freire</h2>
+          <p class="mt-4 text-sm text-[#fff1df]/45">
+            Professor e Mestre em Filosofia pela PUC-SP. Mais de dez anos ministrando aulas pelo Brasil.
+          </p>
+
+          <div class="mt-8 space-y-5 text-base leading-relaxed text-[#fff1df]/65">
+            <p>
+              É um dos nomes mais respeitados hoje na divulgação da filosofia como caminho de formação pessoal, familiar
+              e social. Une fé e razão com uma clareza pouco comum, e transforma temas densos em reflexão acessível sem
+              rebaixar o assunto.
+            </p>
+            <p>
+              Fundou o <strong class="font-normal text-[#ebc173]">Em Busca da Verdade</strong>, sociedade de formação
+              clássica dedicada à excelência intelectual, e o <strong class="font-normal text-[#ebc173]"
+                >Filosofia do Zero</strong
+              >, plataforma que leva a sabedoria dos grandes pensadores a mais de 15 mil alunos.
+            </p>
+            <p>
+              Uma das marcas centrais do seu pensamento é a superação da falsa divisão entre fé e razão. Para Freire, a
+              fé não se opõe ao pensamento crítico: é a sua matriz mais profunda. A razão descobre verdades, e a fé dá
+              coragem para vivê-las.
+            </p>
+          </div>
+
+          <div class="mt-10 border-t border-white/8 pt-8">
+            <p class="rotulo text-[10px] text-[#ebc173]/60">Trajetória pública</p>
+            <p class="mt-3 text-sm leading-relaxed text-[#fff1df]/50">
+              Foi Secretário Adjunto na Secretaria Nacional da Juventude e Chefe de Gabinete na Secretaria do
+              Planejamento do Governo do Paraná, onde também atuou como Coordenador de Empreendedorismo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TEMAS ==================== -->
+  <section class="border-y border-white/8 bg-[#131110] py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-5 md:px-8">
+      <div class="revelar max-w-2xl">
+        <p class="rotulo text-[11px] text-[#ebc173]">O que será tratado</p>
+        <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-5xl">
+          Noventa minutos que ligam a sabedoria clássica à sua
+          <span class="text-[#ebc173] whitespace-nowrap italic">segunda-feira</span>.
+        </h2>
+      </div>
+
+      <div class="revelar mt-14 grid gap-px bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          temas.map((t) => (
+            <article class="group bg-[#131110] p-8 transition hover:bg-[#1c1917]">
+              <p class="font-display text-3xl text-[#ebc173]/25 transition group-hover:text-[#ebc173]/60">{t.n}</p>
+              <h3 class="font-display mt-4 text-2xl text-[#fff1df]">{t.titulo}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[#fff1df]/50">{t.texto}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="revelar mx-auto mt-14 max-w-2xl text-center text-base leading-relaxed text-[#fff1df]/55 md:text-lg">
+        Cultura, filosofia e desenvolvimento pessoal a serviço de algo maior: liderar com propósito, dentro e fora de
+        casa.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== CONTAGEM + CTA ==================== -->
+  <section class="relative overflow-hidden py-24 md:py-32">
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,102,43,0.14),transparent_65%)]"
+    >
+    </div>
+    <div class="revelar mx-auto max-w-3xl px-5 text-center md:px-8">
+      <p class="rotulo text-[11px] text-[#ebc173]">Faltam</p>
+
+      <div
+        id="contagem"
+        class="mt-8 flex items-start justify-center gap-4 md:gap-10"
+        aria-live="polite"
+        aria-label="Tempo restante para a Aula Magna"
+      >
+        {
+          [
+            { id: 'dias', r: 'dias' },
+            { id: 'horas', r: 'horas' },
+            { id: 'minutos', r: 'min' },
+            { id: 'segundos', r: 'seg' },
+          ].map((u) => (
+            <div class="min-w-[64px] md:min-w-[92px]">
+              <p id={u.id} class="font-display text-4xl leading-none text-[#fff1df] tabular-nums md:text-6xl">
+                --
+              </p>
+              <p class="rotulo mt-3 text-[9px] text-[#fff1df]/35 md:text-[10px]">{u.r}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <h2 class="font-display mt-14 text-3xl leading-tight text-[#fff1df] md:text-5xl">
+        Lidere com propósito, <span class="text-[#ebc173] italic">dentro e fora de casa</span>.
+      </h2>
+      <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-[#fff1df]/55">
+        O auditório tem capacidade fixa e a inscrição encerra quando as vagas acabarem. Não há transmissão nem gravação.
+      </p>
+
+      <a
+        href={INSCRICAO}
+        target="_blank"
+        rel="noopener"
+        class="rotulo group mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-[#ebc173] px-10 py-4 text-xs text-[#0a0908] shadow-[0_0_50px_-10px_rgba(235,193,115,0.6)] transition hover:bg-[#f4e1c8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ebc173]"
+      >
+        Inscrever-me agora
+        <span aria-hidden="true" class="transition group-hover:translate-x-1">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="border-t border-white/8 bg-[#131110] py-24 md:py-32">
+    <div class="mx-auto max-w-3xl px-5 md:px-8">
+      <div class="revelar text-center">
+        <p class="rotulo text-[11px] text-[#ebc173]">Perguntas frequentes</p>
+        <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-4xl">
+          Antes de garantir sua vaga
+        </h2>
+      </div>
+
+      <div class="revelar mt-12 divide-y divide-white/8 border-y border-white/8">
+        {
+          faq.map((item) => (
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left transition hover:text-[#ebc173] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ebc173]">
+                <span class="font-display text-lg text-[#fff1df] group-hover:text-[#ebc173] md:text-xl">{item.q}</span>
+                <span
+                  aria-hidden="true"
+                  class="shrink-0 text-2xl leading-none text-[#ebc173] transition group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p class="pb-6 pr-10 text-sm leading-relaxed text-[#fff1df]/55 md:text-base">{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+
+      <p class="revelar mt-10 text-center text-sm text-[#fff1df]/45">
+        Ficou alguma dúvida?{' '}
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noopener"
+          class="text-[#ebc173] underline underline-offset-4 transition hover:text-[#f4e1c8]"
+        >
+          Fale com a equipe no WhatsApp
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== RODAPÉ ==================== -->
+  <footer class="py-16">
+    <div class="mx-auto max-w-6xl px-5 md:px-8">
+      <div class="filete"></div>
+      <div class="mt-10 flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
+        <Image
+          src={logoForja}
+          alt="FORJA LEM"
+          widths={[240, 480]}
+          sizes="150px"
+          class="h-11 w-auto rounded-[3px]"
+          loading="lazy"
+        />
+        <div>
+          <p class="rotulo text-[10px] text-[#fff1df]/45">Fórum de Formação, Filosofia e Liderança</p>
+          <p class="mt-2 text-xs text-[#fff1df]/25">
+            FORJA LEM © 2026 &nbsp;·&nbsp; Luís Eduardo Magalhães, Bahia
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== WHATSAPP FLUTUANTE ==================== -->
+  <a
+    href={WHATSAPP}
+    target="_blank"
+    rel="noopener"
+    class="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-sm font-medium text-[#0a0908] shadow-lg transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
+    aria-label="Tirar dúvida no WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true">
+      <path
+        d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.21-8.24 8.21z"
+      ></path>
+    </svg>
+    <span class="hidden sm:inline">Tirar dúvida</span>
+  </a>
+
+  <script is:inline>
+    (() => {
+      // 12/09/2026, 15h, horário de Brasília (UTC-3)
+      const alvo = new Date('2026-09-12T15:00:00-03:00').getTime();
+      const campos = {
+        dias: document.getElementById('dias'),
+        horas: document.getElementById('horas'),
+        minutos: document.getElementById('minutos'),
+        segundos: document.getElementById('segundos'),
+      };
+      if (!campos.dias) return;
+
+      const pad = (n) => String(n).padStart(2, '0');
+
+      const tick = () => {
+        const resta = alvo - Date.now();
+        if (resta <= 0) {
+          Object.values(campos).forEach((el) => (el.textContent = '00'));
+          clearInterval(timer);
+          return;
+        }
+        const s = Math.floor(resta / 1000);
+        campos.dias.textContent = pad(Math.floor(s / 86400));
+        campos.horas.textContent = pad(Math.floor((s % 86400) / 3600));
+        campos.minutos.textContent = pad(Math.floor((s % 3600) / 60));
+        campos.segundos.textContent = pad(s % 60);
+      };
+
+      tick();
+      const timer = setInterval(tick, 1000);
+    })();
+  </script>
+</ForjaLayout>

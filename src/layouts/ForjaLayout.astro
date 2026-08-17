@@ -1,0 +1,147 @@
+---
+// Layout dedicado da landing FORJA LEM.
+// Fica fora do PageLayout do AstroWind de proposito: a pagina tem identidade
+// propria (preto + dourado + brasa), sem header, footer ou toggle de tema do template.
+import '~/assets/styles/tailwind.css';
+import { Font } from 'astro:assets';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { title, description, image } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
+
+// Imagem de compartilhamento (WhatsApp, Facebook, LinkedIn) precisa de URL absoluta.
+const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : image;
+---
+
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0A0908" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <Font cssVariable="--font-garamond" preload />
+    <Font cssVariable="--font-montserrat" preload />
+    <Font cssVariable="--font-inter" />
+
+    <style is:global>
+      :root {
+        --forja-preto: #0a0908;
+        --forja-carvao: #131110;
+        --forja-fumaca: #1c1917;
+        --forja-ouro: #ebc173;
+        --forja-ouro-claro: #f4e1c8;
+        --forja-creme: #fff1df;
+        --forja-brasa: #d9662b;
+
+        --font-display: var(--font-garamond), Georgia, serif;
+        --font-label: var(--font-montserrat), sans-serif;
+        --font-body: var(--font-inter), system-ui, sans-serif;
+      }
+
+      html {
+        background-color: var(--forja-preto);
+      }
+
+      body {
+        background-color: var(--forja-preto);
+        color: var(--forja-creme);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::selection {
+        background: var(--forja-ouro);
+        color: var(--forja-preto);
+      }
+
+      .font-display {
+        font-family: var(--font-display);
+      }
+      .font-label {
+        font-family: var(--font-label);
+      }
+
+      .rotulo {
+        font-family: var(--font-label);
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      /* Filete dourado usado como separador entre secoes */
+      .filete {
+        background: linear-gradient(90deg, transparent, rgba(235, 193, 115, 0.45), transparent);
+        height: 1px;
+      }
+
+      /* Entrada suave das secoes, desligada para quem prefere menos movimento */
+      .revelar {
+        opacity: 0;
+        transform: translateY(1.5rem);
+        transition:
+          opacity 0.7s ease-out,
+          transform 0.7s ease-out;
+      }
+      .revelar.visivel {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .revelar {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <slot />
+
+    <script is:inline>
+      (() => {
+        const alvos = document.querySelectorAll('.revelar');
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          alvos.forEach((el) => el.classList.add('visivel'));
+          return;
+        }
+        const obs = new IntersectionObserver(
+          (entradas) => {
+            entradas.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visivel');
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px' }
+        );
+        alvos.forEach((el) => obs.observe(el));
+      })();
+    </script>
+  </body>
+</html>

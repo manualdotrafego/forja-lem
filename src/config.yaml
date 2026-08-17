@@ -1,0 +1,72 @@
+site:
+  name: FORJA LEM
+  site: 'https://manualdotrafego.github.io'
+  base: '/forja-lem'
+  trailingSlash: false
+
+  googleSiteVerificationId: null
+
+# Default SEO metadata
+metadata:
+  title:
+    default: FORJA LEM
+    template: '%s | FORJA LEM'
+  description: 'Aula Magna presencial com Guilherme Freire em Luís Eduardo Magalhães, BA. 12 de setembro de 2026.'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: FORJA LEM
+    images:
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 628
+    type: website
+  twitter:
+    handle: null
+    site: null
+    cardType: summary_large_image
+
+i18n:
+  language: pt-BR
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: false
+    postsPerPage: 6
+
+    post:
+      isEnabled: false
+      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      robots:
+        index: true
+
+    list:
+      isEnabled: false
+      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      robots:
+        index: true
+
+    category:
+      isEnabled: false
+      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      robots:
+        index: true
+
+    tag:
+      isEnabled: false
+      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null # or "G-XXXXXXXXXX"
+
+ui:
+  theme: 'dark:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
