@@ -123,12 +123,17 @@ const faq = [
         loading="eager"
         fetchpriority="high"
       />
-      <!-- Escurece a esquerda para o texto respirar e libera o rosto à direita -->
+      <!-- Escurece a esquerda para o texto respirar e libera o rosto à direita.
+           A metade esquerda da foto já é quase preta, então no desktop basta um
+           reforço leve: a queda para transparente acontece antes do rosto. -->
       <div
-        class="absolute inset-0 bg-gradient-to-r from-[#0a0908] via-[#0a0908]/92 to-[#0a0908]/62 lg:from-28% lg:via-[#0a0908]/85 lg:via-50% lg:to-transparent lg:to-72%"
+        class="absolute inset-0 bg-[linear-gradient(to_right,#0a0908_0%,rgba(10,9,8,0.94)_45%,rgba(10,9,8,0.85)_70%,rgba(10,9,8,0.7)_100%)] lg:bg-[linear-gradient(to_right,#0a0908_0%,#0a0908_26%,rgba(10,9,8,0.72)_42%,rgba(10,9,8,0.18)_55%,transparent_66%)]"
       >
       </div>
-      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0908] via-transparent via-40% to-[#0a0908]/45"></div>
+      <div
+        class="absolute inset-0 bg-[linear-gradient(to_top,#0a0908_0%,transparent_30%,transparent_78%,rgba(10,9,8,0.3)_100%)]"
+      >
+      </div>
     </div>
 
     <div class="mx-auto max-w-6xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-32 lg:pt-48">
