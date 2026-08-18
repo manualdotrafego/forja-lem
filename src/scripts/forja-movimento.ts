@@ -71,37 +71,32 @@ function animarHero(desktop: boolean) {
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  tl.from('[data-hero-rotulo]', { autoAlpha: 0, x: -18, duration: 0.7 })
-    .from(linhas, { autoAlpha: 0, y: desktop ? 34 : 22, duration: 0.9, stagger: 0.11 }, '-=0.35')
-    .from(itens, { autoAlpha: 0, y: 18, duration: 0.7, stagger: 0.09 }, '-=0.45');
+  tl.from('[data-hero-rotulo]', { opacity: 0, x: -18, duration: 0.7 })
+    .from(linhas, { opacity: 0, y: desktop ? 34 : 22, duration: 0.9, stagger: 0.11 }, '-=0.35')
+    .from(itens, { opacity: 0, y: 18, duration: 0.7, stagger: 0.09 }, '-=0.45');
 
   return tl;
 }
 
 /* ------------------------------------------------------------------ *
  * Revelacoes de secao
+ *
+ * Quem esconde e mostra aqui e o CSS, nao o GSAP. O ScrollTrigger so poe
+ * a classe .revelado; a transicao e o escalonamento sao regra de folha de
+ * estilo. Assim, se o GSAP falhar ou o requestAnimationFrame nao rodar,
+ * basta tirar .js-motion do <html> e a pagina inteira aparece. Foi esse o
+ * bug dos cards de temas: com gsap.from o estado escondido ficava inline,
+ * e um tween que nao roda deixava o bloco invisivel de vez.
  * ------------------------------------------------------------------ */
-function animarSecoes(desktop: boolean) {
+function animarSecoes() {
+  const revelar = (el: Element) => el.classList.add('revelado');
+
   q('[data-revelar]').forEach((el) => {
-    gsap.from(el, {
-      autoAlpha: 0,
-      y: desktop ? 40 : 24,
-      duration: 0.85,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-    });
+    ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => revelar(el) });
   });
 
-  // listas e grades entram escalonadas, item a item
   q('[data-revelar-lista]').forEach((lista) => {
-    gsap.from(lista.children, {
-      autoAlpha: 0,
-      y: desktop ? 30 : 18,
-      duration: 0.7,
-      ease: 'power2.out',
-      stagger: desktop ? 0.08 : 0.05,
-      scrollTrigger: { trigger: lista, start: 'top 85%', once: true },
-    });
+    ScrollTrigger.create({ trigger: lista, start: 'top 85%', once: true, onEnter: () => revelar(lista) });
   });
 }
 
@@ -114,16 +109,6 @@ function animarParallax() {
   if (foto) {
     gsap.to(foto, {
       yPercent: 12,
-      ease: 'none',
-      scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: true },
-    });
-  }
-
-  const brasas = document.querySelector('[data-brasas]');
-  if (brasas) {
-    gsap.to(brasas, {
-      yPercent: 22,
-      autoAlpha: 0,
       ease: 'none',
       scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: true },
     });
@@ -170,7 +155,17 @@ async function ligarBrasas(quantidade: number, intensidade: number, pixelRatioMa
   try {
     const { iniciarBrasas } = await import('./forja-brasas');
     const campo = iniciarBrasas(canvas, { quantidade, intensidade, pixelRatioMax });
-    gsap.to(canvas, { autoAlpha: 1, duration: 1.6, ease: 'power2.out' });
+    gsap.to(canvas, { opacity: 1, duration: 1.6, ease: 'power2.out' });
+
+    // A camada e fixa e acompanha a pagina toda. Passando do hero ela recua
+    // para um brilho de fundo, em vez de zerar: era isso que fazia a chama
+    // "sumir" no primeiro scroll.
+    gsap.to(canvas, {
+      opacity: 0.38,
+      ease: 'none',
+      scrollTrigger: { trigger: '#topo', start: 'top top', end: 'bottom top', scrub: 0.6 },
+    });
+
     return campo;
   } catch {
     // sem WebGL o hero continua igual, so sem as fagulhas
@@ -202,7 +197,7 @@ export function iniciar() {
       }
 
       animarHero(!!desktop);
-      animarSecoes(!!desktop);
+      animarSecoes();
 
       let campo: Awaited<ReturnType<typeof ligarBrasas>> = null;
       let lenis: Awaited<ReturnType<typeof ligarRolagemSuave>> | null = null;
@@ -227,11 +222,8 @@ export function iniciar() {
     }
   );
 
-  // O CSS esconde os alvos ate aqui para nao piscar. As chamadas gsap.from()
-  // acima ja gravaram visibility:hidden inline, entao soltar a classe agora
-  // nao mostra nada antes da hora: acontece tudo na mesma tarefa sincrona.
-  document.documentElement.classList.remove('js-motion');
-
+  // .js-motion fica no <html> ate o fim: e ele que sustenta o estado escondido
+  // do CSS. Quem tira e o vigia abaixo, se a animacao nao acontecer.
   vigiarRevelacao();
 
   // as fontes mudam a altura do texto: recalcula os gatilhos quando chegarem
@@ -263,11 +255,12 @@ function vigiarRevelacao() {
 
     jaLiberou = true;
 
-    const presos = q('[data-revelar], [data-hero-rotulo], [data-hero-linha], [data-hero-item]').concat(
-      q('[data-revelar-lista] > *')
-    );
-    gsap.killTweensOf(presos);
-    gsap.set(presos, { clearProps: 'all' });
+    const heroi = q('[data-hero-rotulo], [data-hero-linha], [data-hero-item]');
+    gsap.killTweensOf(heroi);
+    gsap.set(heroi, { opacity: 1, x: 0, y: 0 });
+    // sem .js-motion, o CSS para de esconder qualquer coisa
+    document.documentElement.classList.remove('js-motion');
+    q('[data-revelar], [data-revelar-lista]').forEach((el) => el.classList.add('revelado'));
 
     const barra = document.querySelector('[data-barra-mobile]');
     if (barra) gsap.set(barra, { yPercent: 0, autoAlpha: 1 });

@@ -81,6 +81,16 @@ const faq = [
   description="Aula Magna presencial com Guilherme Freire em Luís Eduardo Magalhães (BA). Cultura clássica, fé e razão a serviço de uma liderança de caráter. 12 de setembro de 2026, vagas limitadas."
   image={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/og-forja-lem.jpg`}
 >
+  <!-- ============ FAGULHAS (camada fixa da página inteira) ============
+       Ficava só dentro do hero e sumia no primeiro scroll. Agora é uma camada
+       fixa: acompanha a leitura inteira, forte no hero e discreta depois,
+       costurando uma seção na outra. -->
+  <canvas
+    data-brasas
+    aria-hidden="true"
+    class="pointer-events-none fixed inset-0 z-[1] h-full w-full opacity-0 mix-blend-screen"
+  ></canvas>
+
   <!-- ==================== HEADER ==================== -->
   <header
     class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-[#0a0908]/80 backdrop-blur-md supports-[backdrop-filter]:bg-[#0a0908]/60"
@@ -111,9 +121,9 @@ const faq = [
   </header>
 
   <!-- ==================== HERO ==================== -->
-  <section id="topo" class="relative isolate overflow-hidden">
+  <section id="topo" class="relative overflow-hidden">
     <!-- Retrato + degradês que fundem a foto no preto -->
-    <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 z-0 overflow-hidden">
       <Image
         data-hero-foto
         src={heroFreire}
@@ -136,16 +146,9 @@ const faq = [
       >
       </div>
 
-      <!-- Fagulhas em WebGL. Comeca invisivel e o GSAP faz o fade quando
-           o modulo carrega, para nao aparecer um retangulo antes da hora. -->
-      <canvas
-        data-brasas
-        aria-hidden="true"
-        class="pointer-events-none absolute inset-0 h-full w-full opacity-0 mix-blend-screen"
-      ></canvas>
     </div>
 
-    <div class="mx-auto max-w-6xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-32 lg:pt-48">
+    <div class="relative z-10 mx-auto max-w-6xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-32 lg:pt-48">
       <div class="max-w-2xl">
         <p data-hero-rotulo class="rotulo flex items-center gap-3 text-[11px] text-[#ebc173]">
           <span class="inline-block h-px w-8 bg-[#ebc173]"></span>
@@ -193,7 +196,7 @@ const faq = [
   </section>
 
   <!-- ==================== FAIXA DE DADOS ==================== -->
-  <section aria-label="Informações do evento" class="border-y border-white/8 bg-[#131110]">
+  <section aria-label="Informações do evento" class="relative z-10 bg-[#131110]/80 backdrop-blur-[2px]">
     <div class="mx-auto grid max-w-6xl grid-cols-1 px-5 sm:grid-cols-2 md:px-8 lg:grid-cols-4">
       {
         [
@@ -219,7 +222,7 @@ const faq = [
   </section>
 
   <!-- ==================== CITAÇÃO ==================== -->
-  <section class="relative overflow-hidden py-24 md:py-32">
+  <section class="relative z-10 overflow-hidden py-24 md:py-32">
     <div
       class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(235,193,115,0.13),transparent_70%)]"
     >
@@ -234,7 +237,7 @@ const faq = [
   </section>
 
   <!-- ==================== PARA QUEM É ==================== -->
-  <section class="bg-[#131110] py-24 md:py-32">
+  <section class="emenda relative z-10 bg-gradient-to-b from-[#131110]/85 via-[#131110]/85 to-transparent py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div data-revelar class="max-w-2xl">
         <p class="rotulo text-[11px] text-[#ebc173]">Para quem é</p>
@@ -270,7 +273,7 @@ const faq = [
   </section>
 
   <!-- ==================== GUILHERME FREIRE ==================== -->
-  <section class="py-24 md:py-32">
+  <section class="relative z-10 py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div class="grid items-start gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
         <div data-revelar>
@@ -345,13 +348,14 @@ const faq = [
   </section>
 
   <!-- ==================== TEMAS ==================== -->
-  <section class="border-y border-white/8 bg-[#131110] py-24 md:py-32">
+  <section class="emenda relative z-10 bg-gradient-to-b from-transparent via-[#131110]/85 to-[#131110]/85 py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div data-revelar class="max-w-2xl">
         <p class="rotulo text-[11px] text-[#ebc173]">O que será tratado</p>
         <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-5xl">
-          Noventa minutos que ligam a sabedoria clássica à sua
-          <span class="text-[#ebc173] whitespace-nowrap italic">segunda-feira</span>.
+          Noventa minutos que ligam a sabedoria clássica à sua{' '}<span
+            class="text-[#ebc173] whitespace-nowrap italic">segunda-feira</span
+          >.
         </h2>
       </div>
 
@@ -375,7 +379,7 @@ const faq = [
   </section>
 
   <!-- ==================== CONTAGEM + CTA ==================== -->
-  <section class="relative overflow-hidden py-24 md:py-32">
+  <section class="relative z-10 overflow-hidden py-24 md:py-32">
     <div
       class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,102,43,0.14),transparent_65%)]"
     >
@@ -426,7 +430,7 @@ const faq = [
   </section>
 
   <!-- ==================== FAQ ==================== -->
-  <section class="border-t border-white/8 bg-[#131110] py-24 md:py-32">
+  <section class="relative z-10 bg-gradient-to-b from-[#131110]/85 to-[#0a0908] py-24 md:py-32">
     <div class="mx-auto max-w-3xl px-5 md:px-8">
       <div data-revelar class="text-center">
         <p class="rotulo text-[11px] text-[#ebc173]">Perguntas frequentes</p>
@@ -469,7 +473,7 @@ const faq = [
   </section>
 
   <!-- ==================== RODAPÉ ==================== -->
-  <footer class="pb-28 pt-16 lg:pb-16">
+  <footer class="relative z-10 pb-28 pt-16 lg:pb-16">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div class="filete"></div>
       <div class="mt-10 flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">

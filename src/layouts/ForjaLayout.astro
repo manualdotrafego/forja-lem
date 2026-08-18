@@ -39,10 +39,12 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     <script is:inline>
-      // roda antes do primeiro paint: evita o flash do conteudo que o GSAP anima
+      // roda antes do primeiro paint: evita o flash do conteudo que sera animado.
+      // Nao tem prazo aqui de proposito: a classe precisa durar a sessao toda,
+      // porque e ela que sustenta o estado escondido das revelacoes. Quem
+      // desfaz em caso de falha e o vigia em src/scripts/forja-movimento.ts.
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('js-motion');
-        setTimeout(() => document.documentElement.classList.remove('js-motion'), 3000);
       }
     </script>
 
@@ -95,22 +97,91 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
         text-transform: uppercase;
       }
 
+      /* Emenda entre secoes: em vez de linha dura, um veu que dissolve a
+         borda de uma na outra e deixa as fagulhas passarem por tras */
+      .emenda::before,
+      .emenda::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 5rem;
+        pointer-events: none;
+      }
+      .emenda::before {
+        top: 0;
+        background: linear-gradient(to bottom, rgba(10, 9, 8, 0.9), transparent);
+      }
+      .emenda::after {
+        bottom: 0;
+        background: linear-gradient(to top, rgba(10, 9, 8, 0.9), transparent);
+      }
+
       /* Filete dourado usado como separador entre secoes */
       .filete {
         background: linear-gradient(90deg, transparent, rgba(235, 193, 115, 0.45), transparent);
         height: 1px;
       }
 
-      /* Enquanto o GSAP nao assume, os alvos ficam escondidos para nao piscar.
-         A classe js-motion so entra se houver JS e se a pessoa nao pediu menos
-         movimento, e sai sozinha em 3s caso o modulo falhe: sem JS ou com erro
-         de rede, a pagina aparece inteira do mesmo jeito. */
-      .js-motion [data-revelar],
-      .js-motion [data-revelar-lista] > *,
+      /* Revelacoes.
+         Quem esconde e o CSS, preso a .js-motion no <html>. O JS so poe a
+         classe .revelado no gatilho. Se o GSAP quebrar ou o rAF nao rodar,
+         tirar .js-motion mostra a pagina inteira de uma vez, e e o que o
+         vigia do forja-movimento.ts faz. */
+      /* Esconde por opacity, nao por visibility. Com visibility, assim que o
+         GSAP terminava o tween e soltava a propriedade, esta regra voltava a
+         valer e o hero sumia de novo. Com opacity, o valor inline que o tween
+         deixa (opacity:1) continua ganhando da folha de estilo. */
       .js-motion [data-hero-rotulo],
       .js-motion [data-hero-linha],
       .js-motion [data-hero-item] {
-        visibility: hidden;
+        opacity: 0;
+      }
+
+      [data-revelar],
+      [data-revelar-lista] > * {
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .js-motion [data-revelar],
+      .js-motion [data-revelar-lista] > * {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+
+      .js-motion [data-revelar].revelado,
+      .js-motion [data-revelar-lista].revelado > * {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Escalonamento em CSS puro: nao depende de requestAnimationFrame */
+      .js-motion [data-revelar-lista] > *:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .js-motion [data-revelar-lista] > *:nth-child(2) {
+        transition-delay: 0.07s;
+      }
+      .js-motion [data-revelar-lista] > *:nth-child(3) {
+        transition-delay: 0.14s;
+      }
+      .js-motion [data-revelar-lista] > *:nth-child(4) {
+        transition-delay: 0.21s;
+      }
+      .js-motion [data-revelar-lista] > *:nth-child(5) {
+        transition-delay: 0.28s;
+      }
+      .js-motion [data-revelar-lista] > *:nth-child(n + 6) {
+        transition-delay: 0.35s;
+      }
+
+      @media (max-width: 1023px) {
+        .js-motion [data-revelar],
+        .js-motion [data-revelar-lista] > * {
+          transform: translateY(1.25rem);
+        }
       }
 
       /* O Lenis controla a rolagem no desktop, entao o smooth nativo sai de cena */
