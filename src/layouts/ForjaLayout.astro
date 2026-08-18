@@ -38,6 +38,14 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
     <meta name="twitter:card" content="summary_large_image" />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
+    <script is:inline>
+      // roda antes do primeiro paint: evita o flash do conteudo que o GSAP anima
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js-motion');
+        setTimeout(() => document.documentElement.classList.remove('js-motion'), 3000);
+      }
+    </script>
+
     <Font cssVariable="--font-garamond" preload />
     <Font cssVariable="--font-montserrat" preload />
     <Font cssVariable="--font-inter" />
@@ -93,27 +101,30 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
         height: 1px;
       }
 
-      /* Entrada suave das secoes, desligada para quem prefere menos movimento */
-      .revelar {
-        opacity: 0;
-        transform: translateY(1.5rem);
-        transition:
-          opacity 0.7s ease-out,
-          transform 0.7s ease-out;
+      /* Enquanto o GSAP nao assume, os alvos ficam escondidos para nao piscar.
+         A classe js-motion so entra se houver JS e se a pessoa nao pediu menos
+         movimento, e sai sozinha em 3s caso o modulo falhe: sem JS ou com erro
+         de rede, a pagina aparece inteira do mesmo jeito. */
+      .js-motion [data-revelar],
+      .js-motion [data-revelar-lista] > *,
+      .js-motion [data-hero-rotulo],
+      .js-motion [data-hero-linha],
+      .js-motion [data-hero-item] {
+        visibility: hidden;
       }
-      .revelar.visivel {
-        opacity: 1;
-        transform: none;
+
+      /* O Lenis controla a rolagem no desktop, entao o smooth nativo sai de cena */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
       }
 
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
-        }
-        .revelar {
-          opacity: 1;
-          transform: none;
-          transition: none;
         }
       }
     </style>
@@ -122,26 +133,9 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
   <body>
     <slot />
 
-    <script is:inline>
-      (() => {
-        const alvos = document.querySelectorAll('.revelar');
-        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          alvos.forEach((el) => el.classList.add('visivel'));
-          return;
-        }
-        const obs = new IntersectionObserver(
-          (entradas) => {
-            entradas.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add('visivel');
-                obs.unobserve(e.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -10% 0px' }
-        );
-        alvos.forEach((el) => obs.observe(el));
-      })();
+    <script>
+      import { iniciar } from '~/scripts/forja-movimento';
+      iniciar();
     </script>
   </body>
 </html>

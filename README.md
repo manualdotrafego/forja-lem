@@ -7,11 +7,32 @@ em Luís Eduardo Magalhães (BA).
 
 ## Stack
 
-Astro 7 + Tailwind 4, saída estática. Sem framework de UI no cliente: o único
-JavaScript da página é a contagem regressiva e o observador que revela as seções.
+Astro 7 + Tailwind 4, saída estática. Base: [AstroWind](https://github.com/arthelokyo/astrowind)
+(MIT), podado para uma página só.
 
-Base do projeto: [AstroWind](https://github.com/arthelokyo/astrowind) (MIT), podado
-para uma página só.
+Camada de movimento:
+
+| Lib | Para quê | Quando carrega | Peso (gzip) |
+|---|---|---|---|
+| GSAP + ScrollTrigger | entrada do hero, revelação das seções, parallax | sempre, adiado | 45 kB |
+| Lenis | rolagem suave | só desktop | 5 kB |
+| three.js | campo de brasas em WebGL no hero | só se o aparelho e a rede aguentarem | 125 kB |
+
+O three entra por `import()` dinâmico. Quem estiver com economia de dados ligada,
+em rede abaixo de 4G, com menos de 4 GB de RAM ou menos de 4 núcleos vê o hero
+igual, só sem as fagulhas. Quem pediu `prefers-reduced-motion: reduce` não recebe
+animação nenhuma.
+
+### Mobile
+
+`gsap.matchMedia()` separa três cenários: desktop, mobile e movimento reduzido.
+No mobile:
+
+- sem parallax (a barra do navegador entra e sai na rolagem e o efeito treme)
+- sem rolagem suave, vale a nativa do sistema
+- 300 fagulhas em vez de 900, brilho menor, sem retina cheia
+- barra fixa embaixo com o CTA e o WhatsApp, que sobe depois do hero
+- o balão do WhatsApp fica só no desktop, para não duplicar
 
 ## Rodar local
 
@@ -34,7 +55,9 @@ builda e publica no GitHub Pages.
 | Todo o conteúdo da página | `src/pages/index.astro` |
 | Link do Sympla e do WhatsApp | constantes `INSCRICAO` e `WHATSAPP`, topo do mesmo arquivo |
 | Textos das seções | arrays `publico`, `temas`, `credenciais`, `faq` |
-| Cores, fontes e animação | `src/layouts/ForjaLayout.astro` |
+| Cores, fontes e estado inicial | `src/layouts/ForjaLayout.astro` |
+| Animação e regras por breakpoint | `src/scripts/forja-movimento.ts` |
+| Shader das brasas | `src/scripts/forja-brasas.ts` |
 | Título, descrição e domínio | `src/config.yaml` |
 | Imagem de compartilhamento | `public/og-forja-lem.jpg` |
 

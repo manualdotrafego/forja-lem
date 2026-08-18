@@ -113,8 +113,9 @@ const faq = [
   <!-- ==================== HERO ==================== -->
   <section id="topo" class="relative isolate overflow-hidden">
     <!-- Retrato + degradês que fundem a foto no preto -->
-    <div class="absolute inset-0 -z-10">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
       <Image
+        data-hero-foto
         src={heroFreire}
         alt="Guilherme Freire em uma biblioteca"
         widths={[800, 1400, 2205]}
@@ -134,11 +135,19 @@ const faq = [
         class="absolute inset-0 bg-[linear-gradient(to_top,#0a0908_0%,transparent_30%,transparent_78%,rgba(10,9,8,0.3)_100%)]"
       >
       </div>
+
+      <!-- Fagulhas em WebGL. Comeca invisivel e o GSAP faz o fade quando
+           o modulo carrega, para nao aparecer um retangulo antes da hora. -->
+      <canvas
+        data-brasas
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 h-full w-full opacity-0 mix-blend-screen"
+      ></canvas>
     </div>
 
     <div class="mx-auto max-w-6xl px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-32 lg:pt-48">
       <div class="max-w-2xl">
-        <p class="rotulo flex items-center gap-3 text-[11px] text-[#ebc173]">
+        <p data-hero-rotulo class="rotulo flex items-center gap-3 text-[11px] text-[#ebc173]">
           <span class="inline-block h-px w-8 bg-[#ebc173]"></span>
           Aula Magna presencial
         </p>
@@ -146,17 +155,17 @@ const faq = [
         <h1
           class="font-display mt-6 max-w-[13ch] text-[2.6rem] leading-[1.05] text-balance text-[#fff1df] sm:max-w-none md:text-6xl lg:text-[4.25rem]"
         >
-          <span class="block sm:inline lg:block">A formação que forjou</span>{' '}
-          <span class="block sm:inline lg:block">os grandes líderes</span>{' '}
-          <span class="block text-[#ebc173] italic sm:inline lg:block">da história</span>
+          <span data-hero-linha class="block sm:inline lg:block">A formação que forjou</span>{' '}
+          <span data-hero-linha class="block sm:inline lg:block">os grandes líderes</span>{' '}
+          <span data-hero-linha class="block text-[#ebc173] italic sm:inline lg:block">da história</span>
         </h1>
 
-        <p class="mt-7 max-w-xl text-base leading-relaxed text-[#fff1df]/70 md:text-lg">
+        <p data-hero-item class="mt-7 max-w-xl text-base leading-relaxed text-[#fff1df]/70 md:text-lg">
           Nenhuma liderança que durou nasceu de técnica ou de fórmula. Nasceu de caráter forjado com tempo, cultura,
           filosofia e vida interior. É disso que Guilherme Freire vem falar em Luís Eduardo Magalhães.
         </p>
 
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div data-hero-item class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
             href={INSCRICAO}
             target="_blank"
@@ -176,7 +185,7 @@ const faq = [
           </a>
         </div>
 
-        <p class="rotulo mt-8 text-[10px] text-[#fff1df]/40">
+        <p data-hero-item class="rotulo mt-8 text-[10px] text-[#fff1df]/40">
           12 de setembro de 2026 &nbsp;·&nbsp; 15h às 16h30 &nbsp;·&nbsp; Vagas limitadas
         </p>
       </div>
@@ -215,7 +224,7 @@ const faq = [
       class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(235,193,115,0.13),transparent_70%)]"
     >
     </div>
-    <div class="revelar mx-auto max-w-3xl px-5 text-center md:px-8">
+    <div data-revelar class="mx-auto max-w-3xl px-5 text-center md:px-8">
       <p class="font-display text-2xl leading-snug text-[#fff1df] md:text-4xl md:leading-[1.3]">
         <span class="text-[#ebc173]">“</span>A liderança é, antes de tudo, uma disposição para o sacrifício e para o
         desenvolvimento da vida interior.<span class="text-[#ebc173]">”</span>
@@ -227,7 +236,7 @@ const faq = [
   <!-- ==================== PARA QUEM É ==================== -->
   <section class="bg-[#131110] py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
-      <div class="revelar max-w-2xl">
+      <div data-revelar class="max-w-2xl">
         <p class="rotulo text-[11px] text-[#ebc173]">Para quem é</p>
         <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-5xl">
           Esta aula foi pensada para quem carrega<span class="text-[#ebc173] italic"> alguma responsabilidade</span> nas
@@ -239,7 +248,7 @@ const faq = [
         </p>
       </div>
 
-      <ul class="revelar mt-14 grid gap-px border-t border-white/8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul data-revelar-lista class="mt-14 grid gap-px border-t border-white/8 sm:grid-cols-2 lg:grid-cols-3">
         {
           publico.map((item) => (
             <li class="group border-b border-white/8 py-8 sm:pr-8">
@@ -264,7 +273,7 @@ const faq = [
   <section class="py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div class="grid items-start gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
-        <div class="revelar">
+        <div data-revelar>
           <div class="relative">
             <div
               aria-hidden="true"
@@ -272,6 +281,7 @@ const faq = [
             >
             </div>
             <Image
+              data-retrato
               src={palestraFreire}
               alt="Guilherme Freire palestrando em um auditório"
               widths={[600, 900, 1400]}
@@ -296,7 +306,7 @@ const faq = [
           </div>
         </div>
 
-        <div class="revelar">
+        <div data-revelar>
           <p class="rotulo text-[11px] text-[#ebc173]">Quem conduz</p>
           <h2 class="font-display mt-5 text-4xl leading-none text-[#fff1df] md:text-6xl">Guilherme Freire</h2>
           <p class="mt-4 text-sm text-[#fff1df]/45">
@@ -337,7 +347,7 @@ const faq = [
   <!-- ==================== TEMAS ==================== -->
   <section class="border-y border-white/8 bg-[#131110] py-24 md:py-32">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
-      <div class="revelar max-w-2xl">
+      <div data-revelar class="max-w-2xl">
         <p class="rotulo text-[11px] text-[#ebc173]">O que será tratado</p>
         <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-5xl">
           Noventa minutos que ligam a sabedoria clássica à sua
@@ -345,7 +355,7 @@ const faq = [
         </h2>
       </div>
 
-      <div class="revelar mt-14 grid gap-px bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
+      <div data-revelar-lista class="mt-14 grid gap-px bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
         {
           temas.map((t) => (
             <article class="group bg-[#131110] p-8 transition hover:bg-[#1c1917]">
@@ -357,7 +367,7 @@ const faq = [
         }
       </div>
 
-      <p class="revelar mx-auto mt-14 max-w-2xl text-center text-base leading-relaxed text-[#fff1df]/55 md:text-lg">
+      <p data-revelar class="mx-auto mt-14 max-w-2xl text-center text-base leading-relaxed text-[#fff1df]/55 md:text-lg">
         Cultura, filosofia e desenvolvimento pessoal a serviço de algo maior: liderar com propósito, dentro e fora de
         casa.
       </p>
@@ -370,7 +380,7 @@ const faq = [
       class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,102,43,0.14),transparent_65%)]"
     >
     </div>
-    <div class="revelar mx-auto max-w-3xl px-5 text-center md:px-8">
+    <div data-revelar class="mx-auto max-w-3xl px-5 text-center md:px-8">
       <p class="rotulo text-[11px] text-[#ebc173]">Faltam</p>
 
       <div
@@ -418,14 +428,14 @@ const faq = [
   <!-- ==================== FAQ ==================== -->
   <section class="border-t border-white/8 bg-[#131110] py-24 md:py-32">
     <div class="mx-auto max-w-3xl px-5 md:px-8">
-      <div class="revelar text-center">
+      <div data-revelar class="text-center">
         <p class="rotulo text-[11px] text-[#ebc173]">Perguntas frequentes</p>
         <h2 class="font-display mt-5 text-3xl leading-tight text-[#fff1df] md:text-4xl">
           Antes de garantir sua vaga
         </h2>
       </div>
 
-      <div class="revelar mt-12 divide-y divide-white/8 border-y border-white/8">
+      <div data-revelar-lista class="mt-12 divide-y divide-white/8 border-y border-white/8">
         {
           faq.map((item) => (
             <details class="group">
@@ -444,7 +454,7 @@ const faq = [
         }
       </div>
 
-      <p class="revelar mt-10 text-center text-sm text-[#fff1df]/45">
+      <p data-revelar class="mt-10 text-center text-sm text-[#fff1df]/45">
         Ficou alguma dúvida?{' '}
         <a
           href={WHATSAPP}
@@ -459,7 +469,7 @@ const faq = [
   </section>
 
   <!-- ==================== RODAPÉ ==================== -->
-  <footer class="py-16">
+  <footer class="pb-28 pt-16 lg:pb-16">
     <div class="mx-auto max-w-6xl px-5 md:px-8">
       <div class="filete"></div>
       <div class="mt-10 flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
@@ -481,12 +491,49 @@ const faq = [
     </div>
   </footer>
 
-  <!-- ==================== WHATSAPP FLUTUANTE ==================== -->
+
+  <!-- ==================== BARRA FIXA DO MOBILE ====================
+       No celular a decisão acontece com o polegar. Em vez do balão do
+       WhatsApp sozinho, uma barra com o CTA principal e o atalho de dúvida,
+       que só sobe depois que a pessoa passa do hero (senão duplica o botão
+       que já está na tela). Respeita a safe area do iPhone. -->
+  <div
+    data-barra-mobile
+    class="fixed inset-x-0 bottom-0 z-50 border-t border-[#ebc173]/15 bg-[#0a0908]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
+  >
+    <div class="flex items-center gap-3 px-4 py-3">
+      <a
+        href={WHATSAPP}
+        target="_blank"
+        rel="noopener"
+        aria-label="Tirar dúvida no WhatsApp"
+        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#25D366]/40 text-[#25D366] transition active:scale-95"
+      >
+        <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current" aria-hidden="true">
+          <path
+            d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.21-8.24 8.21z"
+          ></path>
+        </svg>
+      </a>
+
+      <a
+        href={INSCRICAO}
+        target="_blank"
+        rel="noopener"
+        class="rotulo flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#ebc173] text-[11px] text-[#0a0908] transition active:scale-[0.98]"
+      >
+        Garantir minha vaga
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ WHATSAPP FLUTUANTE (só desktop) ============ -->
   <a
     href={WHATSAPP}
     target="_blank"
     rel="noopener"
-    class="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-sm font-medium text-[#0a0908] shadow-lg transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
+    class="fixed bottom-5 right-5 z-50 hidden items-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-sm font-medium text-[#0a0908] shadow-lg transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366] lg:flex"
     aria-label="Tirar dúvida no WhatsApp"
   >
     <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true">
