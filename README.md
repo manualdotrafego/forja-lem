@@ -34,6 +34,39 @@ No mobile:
 - barra fixa embaixo com o CTA e o WhatsApp, que sobe depois do hero
 - o balão do WhatsApp fica só no desktop, para não duplicar
 
+## Rastreamento (Meta)
+
+Pixel `1279060486021727`, no `<head>` via `src/layouts/ForjaLayout.astro`.
+Só carrega fora de `localhost`, para teste não sujar os dados da conta.
+
+| Evento | Quando dispara |
+|---|---|
+| `PageView` | ao abrir a página |
+| `AddToCart` | clique em qualquer um dos 4 botões que levam ao Sympla |
+
+Os botões são marcados com `data-evento-pixel="AddToCart"` e
+`data-origem-pixel="..."` (cabecalho, hero, cta-final, barra-mobile), e a
+escuta fica em `src/scripts/forja-pixel.ts`, por delegação. O parâmetro
+`origem` vai junto no evento, então dá para ver qual botão converte mais.
+
+Cada disparo leva um `eventID` único, que serve para deduplicar caso a API
+de Conversões entre depois.
+
+### Sobre o token da API de Conversões
+
+**Não está neste repositório, e não pode estar.** O site é estático e o repo
+é público: qualquer token commitado aqui fica legível para qualquer pessoa,
+e com ele dá para enviar eventos falsos em nome da conta.
+
+A API de Conversões exige um servidor que guarde o token como variável de
+ambiente. Caminhos possíveis:
+
+1. Uma function na Vercel ou Netlify, com o token em variável de ambiente.
+2. A VPS que já roda as outras automações.
+3. Uma Conversion API Gateway da própria Meta.
+
+Sem isso, o pixel do navegador cobre o essencial.
+
 ## Rodar local
 
 ```bash

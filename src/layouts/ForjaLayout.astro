@@ -12,6 +12,11 @@ export interface Props {
 }
 
 const { title, description, image } = Astro.props;
+
+// Pixel da Meta. O ID e publico por natureza: ele aparece no HTML de qualquer
+// site que rode o pixel. O token da API de Conversoes NAO entra aqui, nem em
+// lugar nenhum deste repositorio, porque o site e estatico e publico.
+const PIXEL_META = '1279060486021727';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
 
 // Imagem de compartilhamento (WhatsApp, Facebook, LinkedIn) precisa de URL absoluta.
@@ -37,6 +42,35 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
     {ogImage && <meta property="og:image:height" content="630" />}
     <meta name="twitter:card" content="summary_large_image" />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <!-- ==================== PIXEL DA META ====================
+         Carrega so em producao: em localhost os testes sujariam os dados
+         da conta de anuncios. -->
+    <script is:inline define:vars={{ PIXEL_META }}>
+      if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        /* eslint-disable */
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = '2.0';
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+        /* eslint-enable */
+
+        fbq('init', PIXEL_META);
+        fbq('track', 'PageView');
+      }
+    </script>
 
     <script is:inline>
       // roda antes do primeiro paint: evita o flash do conteudo que sera animado.
@@ -202,11 +236,26 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
   </head>
 
   <body>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display:none"
+        alt=""
+        src={`https://www.facebook.com/tr?id=${PIXEL_META}&ev=PageView&noscript=1`}
+      /></noscript
+    >
+
     <slot />
 
     <script>
       import { iniciar } from '~/scripts/forja-movimento';
       iniciar();
+    </script>
+
+    <script>
+      import { ligarEventosPixel } from '~/scripts/forja-pixel';
+      ligarEventosPixel();
     </script>
   </body>
 </html>
