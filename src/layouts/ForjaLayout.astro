@@ -151,6 +151,49 @@ const ogImage = image && Astro.site ? new URL(image, Astro.site).toString() : im
         background: linear-gradient(to top, rgba(10, 9, 8, 0.9), transparent);
       }
 
+      /* ---------- Carrossel de patrocinadores ----------
+         Marquee em CSS puro: dois grupos identicos lado a lado e um
+         translateX de -50%, que fecha o laco sem emenda. Sem JavaScript
+         de proposito, para nao depender de requestAnimationFrame. */
+      .carrossel {
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      }
+
+      .carrossel-faixa {
+        display: flex;
+        width: max-content;
+        animation: desliza 42s linear infinite;
+      }
+
+      .carrossel:hover .carrossel-faixa,
+      .carrossel:focus-within .carrossel-faixa {
+        animation-play-state: paused;
+      }
+
+      @keyframes desliza {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        /* vira uma grade parada, sem movimento nenhum */
+        .carrossel {
+          -webkit-mask-image: none;
+          mask-image: none;
+        }
+        .carrossel-faixa {
+          animation: none;
+          width: auto;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .carrossel-copia {
+          display: none;
+        }
+      }
+
       /* Filete dourado usado como separador entre secoes */
       .filete {
         background: linear-gradient(90deg, transparent, rgba(235, 193, 115, 0.45), transparent);

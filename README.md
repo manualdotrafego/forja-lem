@@ -34,6 +34,26 @@ No mobile:
 - barra fixa embaixo com o CTA e o WhatsApp, que sobe depois do hero
 - o balão do WhatsApp fica só no desktop, para não duplicar
 
+## Patrocinadores
+
+Carrossel infinito em CSS puro (`.carrossel` no layout), sem JavaScript. A
+faixa repete a lista duas vezes e desliza `-50%`, o que fecha o laço sem
+emenda. Para no hover e no foco do teclado. Com `prefers-reduced-motion:
+reduce` vira uma grade parada.
+
+As logos ficam em cartões claros de propósito: assim cada marca aparece nas
+cores dela em vez de virar silhueta branca, que é o que o patrocinador
+espera ver.
+
+Para adicionar um patrocinador: coloque o PNG em
+`src/assets/images/forja/patrocinadores/` (fundo transparente, recortado
+justo, altura de 260 px) e acrescente uma linha no array `patrocinadores`
+em `src/pages/index.astro`.
+
+As logos atuais foram processadas a partir dos originais: fundo branco
+removido nas que vieram chapadas, recorte justo, e a DBOUT recolorida de
+branco para preto, porque em cartão claro ela sumiria.
+
 ## Rastreamento (Meta)
 
 Pixel `1279060486021727`, no `<head>` via `src/layouts/ForjaLayout.astro`.
@@ -93,6 +113,7 @@ builda e publica no GitHub Pages.
 | Shader das brasas | `src/scripts/forja-brasas.ts` |
 | Título, descrição e domínio | `src/config.yaml` |
 | Imagem de compartilhamento | `public/og-forja-lem.jpg` |
+| Patrocinadores | array `patrocinadores` + `src/assets/images/forja/patrocinadores/` |
 
 ### Paleta
 

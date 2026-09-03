@@ -6,6 +6,12 @@ import heroFreire from '~/assets/images/forja/gf-hero.jpg';
 import palestraFreire from '~/assets/images/forja/gf-palestra.jpg';
 import logoForja from '~/assets/images/forja/forja-logo.jpg';
 
+import logoOrthodontic from '~/assets/images/forja/patrocinadores/orthodontic.png';
+import logoDoceParaiso from '~/assets/images/forja/patrocinadores/doce-paraiso.png';
+import logoDiogoLive from '~/assets/images/forja/patrocinadores/diogo-live.png';
+import logoAgroMatheus from '~/assets/images/forja/patrocinadores/agropecuaria-matheus.png';
+import logoDbout from '~/assets/images/forja/patrocinadores/dbout-midia.png';
+
 const INSCRICAO =
   'https://www.sympla.com.br/evento/aula-magna-a-formacao-que-forjou-os-grandes-lideres-da-historia/3513593?utm_source=facebook&utm_medium=paid&utm_campaign=aula_magna';
 const WHATSAPP =
@@ -48,6 +54,14 @@ const temas = [
 ];
 
 const credenciais = ['ONU', 'Cambridge', 'Oxford', 'Harvard', 'Vale do Silício', 'ITA', 'Insper'];
+
+const patrocinadores = [
+  { nome: 'Orthodontic', logo: logoOrthodontic },
+  { nome: 'Doce Paraíso, Mercado e Panificadora', logo: logoDoceParaiso },
+  { nome: 'Agropecuária Matheus', logo: logoAgroMatheus },
+  { nome: 'Diogo Live Designer', logo: logoDiogoLive },
+  { nome: 'DBOUT Mídia', logo: logoDbout },
+];
 
 const faq = [
   {
@@ -476,6 +490,48 @@ const faq = [
           Fale com a equipe no WhatsApp
         </a>
       </p>
+    </div>
+  </section>
+
+  <!-- ==================== PATROCINADORES ====================
+       Carrossel infinito em CSS. A faixa traz a lista duas vezes: a segunda
+       cópia é só para o laço fechar sem emenda, por isso fica escondida dos
+       leitores de tela. As logos ficam em cartões claros de propósito, para
+       cada marca aparecer nas cores dela em vez de virar silhueta branca. -->
+  <section aria-labelledby="titulo-patrocinio" class="relative z-10 overflow-hidden py-20 md:py-24">
+    <div data-revelar class="mx-auto mb-12 max-w-6xl px-5 text-center md:px-8">
+      <p class="rotulo text-[11px] text-[#ebc173]">Realização e apoio</p>
+      <h2 id="titulo-patrocinio" class="font-display mt-4 text-2xl leading-tight text-[#fff1df] md:text-3xl">
+        Quem faz este encontro acontecer
+      </h2>
+    </div>
+
+    <div class="carrossel">
+      <div class="carrossel-faixa">
+        {
+          [0, 1].map((copia) => (
+            <ul
+              class:list={['flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7', copia === 1 && 'carrossel-copia']}
+              aria-hidden={copia === 1 ? 'true' : undefined}
+            >
+              {patrocinadores.map((p) => (
+                <li class="shrink-0">
+                  <div class="flex h-24 w-52 items-center justify-center rounded-md bg-[#f7f4ee] px-5 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.8)] md:h-28 md:w-60">
+                    <Image
+                      src={p.logo}
+                      alt={copia === 0 ? p.nome : ''}
+                      widths={[240, 480]}
+                      sizes="200px"
+                      class="max-h-16 w-auto max-w-full object-contain md:max-h-[72px]"
+                      loading="lazy"
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
     </div>
   </section>
 
