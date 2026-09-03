@@ -41,9 +41,11 @@ faixa repete a lista duas vezes e desliza `-50%`, o que fecha o laço sem
 emenda. Para no hover e no foco do teclado. Com `prefers-reduced-motion:
 reduce` vira uma grade parada.
 
-As logos ficam em cartões claros de propósito: assim cada marca aparece nas
+As logos ficam em medalhões circulares claros: assim cada marca aparece nas
 cores dela em vez de virar silhueta branca, que é o que o patrocinador
-espera ver.
+espera ver. Dentro do círculo os limites são em porcentagem do diâmetro
+(`max-h-[42%] max-w-[80%]`), porque uma logo baixa cabe numa corda mais
+larga que o quadrado inscrito.
 
 Para adicionar um patrocinador: coloque o PNG em
 `src/assets/images/forja/patrocinadores/` (fundo transparente, recortado

@@ -511,18 +511,20 @@ const faq = [
         {
           [0, 1].map((copia) => (
             <ul
-              class:list={['flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7', copia === 1 && 'carrossel-copia']}
+              class:list={['flex shrink-0 items-center gap-7 pr-7 md:gap-10 md:pr-10', copia === 1 && 'carrossel-copia']}
               aria-hidden={copia === 1 ? 'true' : undefined}
             >
               {patrocinadores.map((p) => (
                 <li class="shrink-0">
-                  <div class="flex h-24 w-52 items-center justify-center rounded-md bg-[#f7f4ee] px-5 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.8)] md:h-28 md:w-60">
+                  <div
+                    class="flex size-40 items-center justify-center rounded-full bg-[#f7f4ee] shadow-[0_12px_36px_-14px_rgba(0,0,0,0.85)] ring-1 ring-[#ebc173]/15 md:size-48"
+                  >
                     <Image
                       src={p.logo}
                       alt={copia === 0 ? p.nome : ''}
                       widths={[240, 480]}
                       sizes="200px"
-                      class="max-h-16 w-auto max-w-full object-contain md:max-h-[72px]"
+                      class="max-h-[42%] max-w-[80%] object-contain"
                       loading="lazy"
                     />
                   </div>
